@@ -11,7 +11,7 @@ function App() {
           <Navbar.Brand href="#home">
             <img
               alt=""
-              src="https://avatars.githubusercontent.com/u/166029138?s=400&u=82feebfa4f6744dc35aada15971814d037d1ad01&v=4"
+              src="awrura.png"
               width="35"
               height="35"
               className="d-inline-block align-top"

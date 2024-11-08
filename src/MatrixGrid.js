@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Container, Button } from 'react-bootstrap';
 import { SketchPicker } from 'react-color';
-import './MatrixGrid.css'
+import './MatrixGrid.css';
 
 const ColorGrid = () => {
   const [matrix, setMatrix] = useState(Array.from({ length: 16 }, () => Array(16).fill('#000000')));
@@ -36,14 +36,30 @@ const ColorGrid = () => {
   const handleColorChange = (colorResult) => setColor(colorResult.hex);
 
   const handleSendClick = () => {
-    const rgbMatrix = matrix.map(row => row.map(cellColor => {
+
+    const rgbMatrix = matrix.flatMap(row => row.map(cellColor => {
       if (cellColor) {
         const [r, g, b] = hexToRgb(cellColor);
         return { red: r, green: g, blue: b };
       }
       return { red: 255, green: 255, blue: 255 };
     }));
+
     console.log(rgbMatrix);
+    fetch('matrix/rgb/hello_world', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(rgbMatrix)
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log('Success:', data);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   };
 
   const hexToRgb = (hex) => {
@@ -53,6 +69,7 @@ const ColorGrid = () => {
     const b = bigint & 255;
     return [r, g, b];
   };
+
   return (
     <Container onMouseDown={handleMouseDown} onMouseUp={handleMouseUp}>
       <div className="d-flex align-items-start">

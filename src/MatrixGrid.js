@@ -49,7 +49,7 @@ const ColorGrid = () => {
         const [r, g, b] = hexToRgb(cellColor);
         return { red: r, green: g, blue: b };
       }
-      return { red: 255, green: 255, blue: 255 };
+      return { red: 0, green: 0, blue: 0 };
     }));
 
     fetch(`matrix/rgb/${matrixName}`, {

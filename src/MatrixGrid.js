@@ -3,6 +3,7 @@ import { Container, Button, Form, Toast } from 'react-bootstrap';
 import { SketchPicker } from 'react-color';
 import { BsGrid } from 'react-icons/bs';
 import './MatrixGrid.css';
+import BrightnessSlider from './BrightnessSlider.js' 
 
 const hexToRgb = hex => {
   const bigint = parseInt(hex.slice(1), 16);
@@ -81,7 +82,7 @@ const ColorGrid = ({ api }) => {
         row.map(c => c ? { red: hexToRgb(c)[0], green: hexToRgb(c)[1], blue: hexToRgb(c)[2] } : { red: 0, green: 0, blue: 0 })
       );
 
-      const response = await fetch(`matrix/rgb/${matrixName}`, {
+      const response = await fetch(`matrix/${matrixName}/rgb`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(rgbData)
@@ -132,6 +133,7 @@ const ColorGrid = ({ api }) => {
               onChangeComplete={c => setColor(c.hex)}
               className="mb-3 sketchpicker-container"
             />
+            <BrightnessSlider matrixName={matrixName} />
             <Button
               variant="primary"
               size="lg"
